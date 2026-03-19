@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import { getBackendBaseUrl } from "../config/backendBaseUrl.js";
 
-const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").trim();
-const ASSET_BASE_URL = configuredApiBaseUrl ? configuredApiBaseUrl.replace(/\/+$/, "") : "http://localhost:3000";
+const ASSET_BASE_URL = getBackendBaseUrl();
 
 const POKEBALL_SRC = `${ASSET_BASE_URL}/sprites/items/poke-ball.png`;
 const SOLROCK_SRC = `${ASSET_BASE_URL}/sprites/pokemon/versions/generation-v/black-white/338.png`;

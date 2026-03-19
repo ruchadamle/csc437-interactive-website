@@ -1,5 +1,6 @@
-const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").trim();
-const API_BASE_URL = configuredApiBaseUrl ? configuredApiBaseUrl.replace(/\/+$/, "") : "http://localhost:3000";
+import { getBackendBaseUrl } from "../config/backendBaseUrl.js";
+
+const API_BASE_URL = getBackendBaseUrl();
 
 export async function registerUser({ username, password }) {
   await request("/api/users", {

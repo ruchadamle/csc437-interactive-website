@@ -1,12 +1,10 @@
-const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").trim();
-const API_BASE_URL = configuredApiBaseUrl ? configuredApiBaseUrl.replace(/\/+$/, "") : "http://localhost:3000";
+import { getBackendBaseUrl } from "../config/backendBaseUrl.js";
 
 export async function fetchPokemon() {
   const data = await request("/api/pokemon");
-  const pokemon = (data?.pokemon ?? [])
+  return (data?.pokemon ?? [])
     .map(normalizePokemonRecord)
     .filter(Boolean);
-  return pokemon;
 }
 
 export async function fetchThemes(userId, token) {
@@ -43,7 +41,7 @@ async function request(path, { method = "GET", body, token } = {}) {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const response = await fetch(`${getBackendBaseUrl()}${path}`, {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
