@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { createTheme, deleteTheme, fetchPokemon, fetchThemes } from "./api/themeApi.js";
 import SiteHeader from "./components/SiteHeader.jsx";
+import PokemonLoader from "./components/PokemonLoader.jsx";
 import { hexToRgba } from "./data/themeUtils.js";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
@@ -208,11 +209,8 @@ export default function App() {
       />
 
       {isLoading ? (
-        <main id="main" className="container">
-          <section className="panel status-panel" role="status" aria-live="polite">
-            <h1>Loading...</h1>
-            <p className="muted">Fetching Pokemon and saved themes from the server.</p>
-          </section>
+        <main id="main" className="container loader-page">
+          <PokemonLoader label="Loading..." />
         </main>
       ) : loadError ? (
         <main id="main" className="container">
