@@ -2,9 +2,8 @@ import bcrypt from "bcrypt";
 import { getUserCredsCollection, getUsersCollection } from "../mongo.js";
 
 export class CredentialsProvider {
-  async registerUser(username, email, password) {
+  async registerUser(username, password) {
     const normalizedUsername = normalizeUsername(username);
-    const normalizedEmail = normalizeEmail(email);
 
     const credsCollection = getUserCredsCollection();
     const usersCollection = getUsersCollection();
@@ -38,7 +37,6 @@ export class CredentialsProvider {
     try {
       await usersCollection.insertOne({
         username: normalizedUsername,
-        email: normalizedEmail,
         createdAt: now,
         updatedAt: now,
       });
@@ -66,13 +64,6 @@ export class CredentialsProvider {
 }
 
 export function normalizeUsername(value) {
-  if (typeof value !== "string") {
-    return "";
-  }
-  return value.trim().toLowerCase();
-}
-
-function normalizeEmail(value) {
   if (typeof value !== "string") {
     return "";
   }

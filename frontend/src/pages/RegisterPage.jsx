@@ -24,7 +24,6 @@ export default function RegisterPage({ onAuthSuccess }) {
       const normalizedUsername = username.trim().toLowerCase();
       await registerUser({
         username: normalizedUsername,
-        email: `${normalizedUsername}@pokepalette.local`,
         password,
       });
       const loginPayload = await loginUser({

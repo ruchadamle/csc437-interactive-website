@@ -6,17 +6,16 @@ export function registerAuthRoutes(app, credentialsProvider) {
   app.post("/api/users", async (req, res, next) => {
     try {
       const username = normalizeUsername(req.body?.username);
-      const email = normalizeEmail(req.body?.email);
       const password = normalizePassword(req.body?.password);
 
-      if (!username || !email || !password) {
+      if (!username || !password) {
         return res.status(400).send({
           error: "Bad request",
-          message: "Missing username, email, or password",
+          message: "Missing username or password",
         });
       }
 
-      const didRegister = await credentialsProvider.registerUser(username, email, password);
+      const didRegister = await credentialsProvider.registerUser(username, password);
       if (!didRegister) {
         return res.status(409).send({
           error: "Conflict",
@@ -78,13 +77,6 @@ function generateAuthToken(username) {
       },
     );
   });
-}
-
-function normalizeEmail(value) {
-  if (typeof value !== "string") {
-    return "";
-  }
-  return value.trim().toLowerCase();
 }
 
 function normalizePassword(value) {

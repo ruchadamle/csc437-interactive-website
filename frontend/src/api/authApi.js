@@ -1,12 +1,11 @@
 const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").trim();
 const API_BASE_URL = configuredApiBaseUrl ? configuredApiBaseUrl.replace(/\/+$/, "") : "http://localhost:3000";
 
-export async function registerUser({ username, email, password }) {
+export async function registerUser({ username, password }) {
   await request("/api/users", {
     method: "POST",
     body: {
       username,
-      email,
       password,
     },
   });
