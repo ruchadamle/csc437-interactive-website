@@ -95,6 +95,8 @@ export default function App() {
     }
 
     const root = document.documentElement;
+    root.style.setProperty("--theme-primary", currentPokemon.palette.primary);
+    root.style.setProperty("--theme-primary-ink", currentPokemon.palette.text);
     root.style.setProperty("--bloom-1-color", hexToRgba(currentPokemon.palette.primary, 0.22));
     root.style.setProperty("--bloom-2-color", hexToRgba(currentPokemon.palette.accent, 0.16));
   }, [currentPokemon]);

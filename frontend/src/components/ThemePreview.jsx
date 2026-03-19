@@ -2,14 +2,14 @@ import React from "react";
 import { createPreviewVariants, hexToRgba } from "../data/themeUtils.js";
 
 const KPI_CARDS = [
-  { label: "Engagement", value: "+18%", trend: "Primary drives clicks" },
-  { label: "Conversion", value: "4.2%", trend: "Accent highlights CTAs" },
-  { label: "Readability", value: "AA+", trend: "Text stays clear on cards" },
+  { label: "Panel 1", value: "+23%", trend: "This is important!" },
+  { label: "Panel 2", value: "Value", trend: "Look at this information carefully..." },
+  { label: "Panel 3", value: "14.5", trend: "Read me please." },
 ];
 
 const CHART_BARS = [
-  24, 28, 31, 34, 37, 41, 45, 42, 47, 50, 54, 57,
-  53, 59, 61, 64, 67, 63, 69, 72, 74, 77, 79, 82,
+  24, 28, 31, 34, 37, 33, 45, 42, 47, 50, 54, 57,
+  53, 59, 61, 64, 67, 52, 69, 72, 84, 77, 87, 82,
 ];
 
 export default function ThemePreview({ palette }) {
@@ -59,11 +59,11 @@ export default function ThemePreview({ palette }) {
           aria-label="Theme preview"
         >
           <header className="preview-site-header">
-            <span className="preview-brand">Palette Dashboard</span>
+            <span className="preview-brand">Palette Visualizer</span>
             <nav className="preview-links" aria-label="Preview navigation">
-              <a href="#" onClick={handlePreviewLinkClick}>Visualizer</a>
-              <a href="#" onClick={handlePreviewLinkClick}>Export</a>
-              <a href="#" onClick={handlePreviewLinkClick}>Share</a>
+              <a href="#" onClick={handlePreviewLinkClick}>Notifications</a>
+              <a href="#" onClick={handlePreviewLinkClick}>Dashboard</a>
+              <a href="#" onClick={handlePreviewLinkClick}>Log In</a>
             </nav>
           </header>
 
@@ -80,7 +80,7 @@ export default function ThemePreview({ palette }) {
 
             <section className="preview-visualizer-row">
               <article className="preview-palette-panel" aria-label="Palette roles">
-                <h5>Palette Roles</h5>
+                <h5>Palette Colors</h5>
                 <div className="preview-palette-list">
                   {roleRows.map((row) => (
                     <div key={row.label} className="preview-palette-row">
@@ -94,7 +94,7 @@ export default function ThemePreview({ palette }) {
 
               <article className="preview-chart-panel" aria-label="Color usage chart">
                 <div className="preview-chart-toolbar">
-                  <span>Color Usage (Bar)</span>
+                  <span>Bar Chart</span>
                   <a href="#" className="preview-inline-link" onClick={handlePreviewLinkClick}>View details</a>
                 </div>
                 <div className="preview-chart-area" aria-hidden="true">
@@ -113,17 +113,17 @@ export default function ThemePreview({ palette }) {
 
             <section className="preview-module-grid">
               <article className="preview-card">
-                <h5>Hero CTA panel</h5>
-                <p>Primary color drives action buttons while text remains readable.</p>
-                <button className="preview-cta" type="button">Launch campaign</button>
+                <h5>Important Panel</h5>
+                <p>This panel could have important information. Pay attention to it!</p>
+                <button className="preview-cta" type="button">Click me!</button>
               </article>
               <article className="preview-card preview-card-accent">
-                <h5>Link + Tag panel</h5>
-                <p>Accent tone highlights navigation and contextual status markers.</p>
+                <h5>Also Important</h5>
+                <p>You can use accent colors for tags to make them stand out.</p>
                 <div className="preview-tags" aria-hidden="true">
-                  <span>Brand</span>
-                  <span>Dashboard</span>
-                  <span>Accessibility</span>
+                  <span>To do</span>
+                  <span>In progress</span>
+                  <span>Completed</span>
                 </div>
               </article>
             </section>

@@ -9,6 +9,20 @@
   --theme-primary: #f2c94c;
   --theme-accent: #6b4e16;
   --theme-text: #2f2412;
+  --theme-primary-soft: rgba(242, 201, 76, 0.34);
+  --theme-primary-strong: #d2a520;
+  --theme-accent-soft: rgba(107, 78, 22, 0.34);
+  --theme-accent-strong: #4d370f;
+  --theme-card-bg: rgba(255, 249, 220, 0.92);
+  --theme-card-bg-alt: rgba(248, 238, 201, 0.9);
+  --theme-outline: rgba(47, 36, 18, 0.24);
+  --theme-grid-line: rgba(47, 36, 18, 0.14);
+  --theme-link: #b88420;
+  --theme-link-hover: #7f5a14;
+  --theme-kpi-trend: #b98c2a;
+  --theme-cta-bg: #d2a520;
+  --theme-cta-hover: #b9871d;
+  --theme-tag-bg: rgba(242, 227, 171, 0.85);
 
   /* inks */
   --theme-primary-ink: #2f2412;

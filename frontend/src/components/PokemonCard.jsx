@@ -171,7 +171,7 @@ export default function PokemonCard({
             )}
           </div>
 
-          <button className="btn-primary" type="submit">
+          <button className="btn-primary generate-theme-btn" type="submit">
             Generate theme
           </button>
         </form>

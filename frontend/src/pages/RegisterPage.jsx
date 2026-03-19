@@ -81,7 +81,7 @@ export default function RegisterPage({ onAuthSuccess }) {
             />
           </div>
 
-          <button className="btn-primary" type="submit" disabled={isWorking}>
+          <button className="btn-primary auth-register-btn" type="submit" disabled={isWorking}>
             {isWorking ? "Creating..." : "Sign up"}
           </button>
         </form>

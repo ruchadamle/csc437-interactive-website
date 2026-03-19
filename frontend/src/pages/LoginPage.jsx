@@ -41,7 +41,7 @@ export default function LoginPage({
       <main id="main" className="container auth-page">
         <section className="panel auth-card">
           <h1>Logged in as: {username}</h1>
-          <button className="btn-primary" type="button" onClick={onLogout}>
+          <button className="btn-primary auth-logout-btn" type="button" onClick={onLogout}>
             Log out
           </button>
         </section>
@@ -77,7 +77,7 @@ export default function LoginPage({
             />
           </div>
 
-          <button className="btn-primary" type="submit" disabled={isWorking}>
+          <button className="btn-primary auth-login-btn" type="submit" disabled={isWorking}>
             {isWorking ? "Logging in..." : "Log in"}
           </button>
         </form>
