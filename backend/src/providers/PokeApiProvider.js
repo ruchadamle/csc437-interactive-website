@@ -8,7 +8,7 @@ import {
   hasGenerationVBlackWhiteSprite,
 } from "../spritePaths.js";
 
-const PALETTE_VERSION = 2;
+const PALETTE_VERSION = 4;
 const SPRITE_VERSION = "gen-v-black-white-local-v2";
 const CATALOG_SYNC_CONCURRENCY = 8;
 const MISSING_DEX_KEY_PREFIX = "missing-dex-";

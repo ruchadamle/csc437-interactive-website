@@ -410,6 +410,9 @@ function scoreAccent(color, primaryMetrics, backgroundLab) {
   const primarySimilarityPenalty = labDistance(color.lab, primaryMetrics.lab) < 18 ? 25 : 0;
   const backgroundDistancePenalty = labDistance(color.lab, backgroundLab) < 14 ? 18 : 0;
   const lightnessPenalty = Math.abs(color.lab.l - 58) * 0.6;
+  const yellowPrimaryGreenPenalty = isWarmYellowHue(primaryMetrics.hsl.h) && isGreenishHue(color.hsl.h)
+    ? 26
+    : 0;
   return (
     hueDistanceBonus
     + colorDistanceBonus
@@ -418,6 +421,7 @@ function scoreAccent(color, primaryMetrics, backgroundLab) {
     - primarySimilarityPenalty
     - backgroundDistancePenalty
     - lightnessPenalty
+    - yellowPrimaryGreenPenalty
   );
 }
 
@@ -438,7 +442,7 @@ function buildFallbackPalette(stats, seedRgb) {
     l: 0.48,
   });
   const accent = hslToRgb({
-    h: (baseHue + 40) % 360,
+    h: deriveAccentHueFromPrimaryHue(baseHue),
     s: 0.72,
     l: 0.57,
   });
@@ -501,16 +505,21 @@ function tuneAccentColor(rgb, primary, background) {
   let accent = { ...rgb };
   const accentHsl = rgbToHsl(accent);
   const primaryHsl = rgbToHsl(primary);
+  const yellowPrimary = isWarmYellowHue(primaryHsl.h);
 
   let hue = accentHsl.h;
   if (hueDistance(hue, primaryHsl.h) < 28) {
-    hue = (primaryHsl.h + 38) % 360;
+    hue = deriveAccentHueFromPrimaryHue(primaryHsl.h);
   }
 
   accent = hslToRgb({
     h: hue,
-    s: clamp(Math.max(accentHsl.s, primaryHsl.s + 0.08), 0.48, 0.9),
-    l: clamp(accentHsl.l, 0.36, 0.68),
+    s: yellowPrimary
+      ? clamp(Math.max(accentHsl.s * 0.9, primaryHsl.s * 0.6), 0.32, 0.68)
+      : clamp(Math.max(accentHsl.s, primaryHsl.s + 0.08), 0.48, 0.9),
+    l: yellowPrimary
+      ? clamp(accentHsl.l - 0.1, 0.24, 0.46)
+      : clamp(accentHsl.l, 0.36, 0.68),
   });
 
   if (labDistance(rgbToLab(accent), rgbToLab(primary)) < MIN_PRIMARY_ACCENT_DISTANCE) {
@@ -561,10 +570,29 @@ function chooseReadableTextColor(background, primary, accent, colors) {
 function deriveAccentFromPrimary(primary) {
   const primaryHsl = rgbToHsl(primary);
   return hslToRgb({
-    h: (primaryHsl.h + 42) % 360,
+    h: deriveAccentHueFromPrimaryHue(primaryHsl.h),
     s: clamp(primaryHsl.s + 0.12, 0.55, 0.92),
     l: clamp(primaryHsl.l + 0.08, 0.42, 0.66),
   });
+}
+
+function deriveAccentHueFromPrimaryHue(primaryHue) {
+  const hue = normalizeHue(primaryHue);
+  // Yellow-heavy subjects often include olive outlines; bias accent toward earthy amber/brown.
+  if (isWarmYellowHue(hue)) {
+    return normalizeHue(hue - 24);
+  }
+  return (hue + 42) % 360;
+}
+
+function isWarmYellowHue(hue) {
+  const normalizedHue = normalizeHue(hue);
+  return normalizedHue >= 38 && normalizedHue <= 82;
+}
+
+function isGreenishHue(hue) {
+  const normalizedHue = normalizeHue(hue);
+  return normalizedHue >= 82 && normalizedHue <= 170;
 }
 
 function nudgeColorForContrast(baseColor, againstColor, minimumContrast, direction) {
@@ -654,6 +682,13 @@ function labDistanceSquared(left, right) {
 function hueDistance(left, right) {
   const diff = Math.abs(left - right) % 360;
   return diff > 180 ? 360 - diff : diff;
+}
+
+function normalizeHue(hue) {
+  if (!Number.isFinite(hue)) {
+    return 0;
+  }
+  return ((hue % 360) + 360) % 360;
 }
 
 function contrastRatio(leftRgb, rightRgb) {
