@@ -1,13 +1,10 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import { getBackendBaseUrl } from "../config/backendBaseUrl.js";
 
-const ASSET_BASE_URL = getBackendBaseUrl();
-
-const POKEBALL_SRC = `${ASSET_BASE_URL}/sprites/items/poke-ball.png`;
-const SOLROCK_SRC = `${ASSET_BASE_URL}/sprites/pokemon/versions/generation-v/black-white/338.png`;
-const LUNATONE_SRC = `${ASSET_BASE_URL}/sprites/pokemon/versions/generation-v/black-white/337.png`;
+const POKEBALL_SRC = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
+const SOLROCK_SRC = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/338.png";
+const LUNATONE_SRC = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/337.png";
 
 export default function SiteHeader({ isDarkMode, onToggleDarkMode, isAuthenticated, username }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
