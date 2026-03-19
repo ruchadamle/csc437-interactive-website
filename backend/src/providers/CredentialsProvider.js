@@ -28,21 +28,23 @@ export class CredentialsProvider {
         createdAt: now,
         updatedAt: now,
       });
-
-      try {
-        await usersCollection.insertOne({
-          username: normalizedUsername,
-          email: normalizedEmail,
-          createdAt: now,
-          updatedAt: now,
-        });
-      } catch (userInsertError) {
-        await credsCollection.deleteOne({ username: normalizedUsername });
-        throw userInsertError;
+    } catch (error) {
+      if (error?.code === 11000) {
+        return false;
       }
+      throw error;
+    }
 
+    try {
+      await usersCollection.insertOne({
+        username: normalizedUsername,
+        email: normalizedEmail,
+        createdAt: now,
+        updatedAt: now,
+      });
       return true;
     } catch (error) {
+      await credsCollection.deleteOne({ username: normalizedUsername });
       if (error?.code === 11000) {
         return false;
       }

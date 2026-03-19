@@ -47,11 +47,11 @@ export function registerThemeRoutes(app) {
       };
 
       const collection = getThemesCollection();
+      let createdTheme = null;
 
       try {
         const insertResult = await collection.insertOne(themeToInsert);
-        const createdTheme = await collection.findOne({ _id: insertResult.insertedId });
-        return res.status(201).json({ theme: formatThemeDocument(createdTheme) });
+        createdTheme = await collection.findOne({ _id: insertResult.insertedId });
       } catch (error) {
         if (error?.code === 11000) {
           const existingTheme = await collection.findOne({ userId, pokemonKey: pokemon.key });
@@ -61,8 +61,10 @@ export function registerThemeRoutes(app) {
             theme: formatThemeDocument(existingTheme),
           });
         }
-        throw error;
+        return next(error);
       }
+
+      return res.status(201).json({ theme: formatThemeDocument(createdTheme) });
     } catch (error) {
       return next(error);
     }
