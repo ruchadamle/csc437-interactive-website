@@ -109,33 +109,31 @@ export default function App() {
   }, [isDarkMode]);
 
   useEffect(() => {
-    const baseTitle = "PokePalette";
-
     if (isLoading) {
-      document.title = `${baseTitle} • Loading`;
+      document.title = "Loading...";
       return;
     }
 
     if (loadError) {
-      document.title = `${baseTitle} • Error`;
+      document.title = "Error";
       return;
     }
 
     switch (location.pathname) {
       case "/":
-        document.title = `${baseTitle} • Home`;
+        document.title = "PokePalette";
         break;
       case "/themes":
-        document.title = `${baseTitle} • My Themes`;
+        document.title = "My Themes";
         break;
       case "/login":
-        document.title = `${baseTitle} • ${isAuthenticated ? "Account" : "Log In"}`;
+        document.title = isAuthenticated ? "Account" : "Log In";
         break;
       case "/register":
-        document.title = `${baseTitle} • Register`;
+        document.title = "Register";
         break;
       default:
-        document.title = baseTitle;
+        document.title = "PokePalette";
     }
   }, [location.pathname, isLoading, loadError, isAuthenticated]);
 
