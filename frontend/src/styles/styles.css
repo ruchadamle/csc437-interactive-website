@@ -1357,7 +1357,7 @@ input::-webkit-search-cancel-button {
   }
 
   .home-grid {
-    grid-template-columns: minmax(14rem, 0.64fr) minmax(24rem, 1.36fr);
+    grid-template-columns: minmax(16rem, 0.72fr) minmax(24rem, 1.36fr);
     gap: 1.35rem;
   }
 
@@ -1459,7 +1459,7 @@ input::-webkit-search-cancel-button {
   }
 
   .home-grid {
-    grid-template-columns: minmax(13rem, 0.48fr) minmax(34rem, 2.02fr);
+    grid-template-columns: minmax(15rem, 0.56fr) minmax(34rem, 2.02fr);
     gap: 1.85rem;
     padding-inline: 0.35rem;
   }
