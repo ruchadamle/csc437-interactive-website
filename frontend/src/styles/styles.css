@@ -1484,3 +1484,10 @@ input::-webkit-search-cancel-button {
     padding-right: var(--space-4);
   }
 }
+
+@media (min-width: 48rem) and (max-width: 75rem) {
+  .combo-menu {
+    left: -0.5rem;
+    right: -0.5rem;
+  }
+}
