@@ -581,7 +581,7 @@ select option {
 
 .pokemon-card-inner .form {
   width: 100%;
-  max-width: 22rem;
+  max-width: 26rem;
 }
 
 .pokemon-card-inner label {
@@ -1278,12 +1278,6 @@ input::-webkit-search-cancel-button {
 .combo-empty {
   padding: 0.85rem 1rem;
   color: var(--color-text-muted);
-}
-
-.combo-name {
-  min-width: 0;
-  flex: 1;
-  overflow-wrap: anywhere;
 }
 
 .home-page .swatches {
