@@ -1484,13 +1484,7 @@ input::-webkit-search-cancel-button {
     padding-right: var(--space-4);
   }
 }
-@media (min-width: 48rem) and (max-width: 80rem) {
-  .combo-menu {
-    width: 32rem !important;
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-    max-width: none !important;
-    background: red !important;
-  }
+
+.combo-menu {
+  background: red !important;
 }
