@@ -674,6 +674,10 @@ select option {
     color 0.2s ease;
 }
 
+body.theme-light .heart-icon {
+  color: rgba(16, 18, 26, 0.5);
+}
+
 .heart-icon.active {
   color: var(--theme-primary);
 }
