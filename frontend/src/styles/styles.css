@@ -1487,7 +1487,10 @@ input::-webkit-search-cancel-button {
 
 @media (min-width: 48rem) and (max-width: 75rem) {
   .combo-menu {
-    left: -0.5rem;
-    right: -0.5rem;
+    width: calc(100% + 1rem);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    max-width: none;
   }
 }
