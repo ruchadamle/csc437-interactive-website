@@ -1357,7 +1357,7 @@ input::-webkit-search-cancel-button {
   }
 
   .home-grid {
-    grid-template-columns: minmax(16rem, 0.72fr) minmax(24rem, 1.36fr);
+    grid-template-columns: minmax(18rem, 0.82fr) minmax(24rem, 1.36fr);
     gap: 1.35rem;
   }
 
