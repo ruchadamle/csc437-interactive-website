@@ -1487,9 +1487,9 @@ input::-webkit-search-cancel-button {
 
 @media (min-width: 800px) and (max-width: 1480px) {
   .combo-menu {
-    left: 50% !important;
-    right: auto !important;
-    width: calc(100% + 3rem) !important;
-    transform: translateX(-50%) !important;
+    left: 50%;
+    right: auto;
+    width: calc(100% + 3rem);
+    transform: translateX(-50%);
   }
 }
