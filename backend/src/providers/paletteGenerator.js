@@ -1,4 +1,5 @@
-import { intToRGBA, Jimp } from "jimp";
+import { readFile } from "node:fs/promises";
+import { PNG } from "pngjs";
 
 const FALLBACK_PALETTE = {
   bg: "#EFF3FF",
@@ -21,7 +22,7 @@ export async function generateWebsitePaletteFromImage(imageUrl) {
   }
 
   try {
-    const image = await Jimp.read(imageUrl);
+    const image = await readPngBitmap(imageUrl);
     const sampledPixels = sampleImagePixels(image);
     if (sampledPixels.length === 0) {
       return FALLBACK_PALETTE;
@@ -46,8 +47,31 @@ export async function generateWebsitePaletteFromImage(imageUrl) {
   }
 }
 
+async function readPngBitmap(imageUrl) {
+  const buffer = await readImageBuffer(imageUrl);
+  return PNG.sync.read(buffer);
+}
+
+async function readImageBuffer(imageUrl) {
+  if (looksLikeHttpUrl(imageUrl)) {
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      throw new Error(`Image request failed with status ${response.status}.`);
+    }
+
+    const arrayBuffer = await response.arrayBuffer();
+    return Buffer.from(arrayBuffer);
+  }
+
+  return readFile(imageUrl);
+}
+
+function looksLikeHttpUrl(value) {
+  return /^https?:\/\//i.test(value);
+}
+
 function sampleImagePixels(image) {
-  const { width, height } = image.bitmap;
+  const { width, height, data } = image;
   if (width <= 0 || height <= 0) {
     return [];
   }
@@ -60,11 +84,17 @@ function sampleImagePixels(image) {
   const samples = [];
   for (let y = 0; y < height; y += stepY) {
     for (let x = 0; x < width; x += stepX) {
-      const rgba = intToRGBA(image.getPixelColor(x, y));
-      if (rgba.a < 90) {
+      const pixelIndex = ((y * width) + x) * 4;
+      const alpha = data[pixelIndex + 3];
+      if (alpha < 90) {
         continue;
       }
-      samples.push({ r: rgba.r, g: rgba.g, b: rgba.b });
+
+      samples.push({
+        r: data[pixelIndex],
+        g: data[pixelIndex + 1],
+        b: data[pixelIndex + 2],
+      });
     }
   }
 
@@ -338,11 +368,9 @@ function shouldUseFallback(stats, dominantColors) {
     return true;
   }
 
-  if (stats.stdL < 6 && stats.avgS < 0.12) {
-    return true;
-  }
+  return stats.stdL < 6 && stats.avgS < 0.12;
 
-  return false;
+
 }
 
 function assignRoleColors(colors, stats) {
